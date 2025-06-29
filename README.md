@@ -6,10 +6,8 @@ A modern web scraper built with PyDoll that can handle JavaScript-heavy websites
 
 - **Modern Browser Automation**: Uses PyDoll with Chrome DevTools Protocol (no WebDriver needed)
 - **Async/Await Support**: High-performance concurrent scraping
-- **Captcha Bypass**: Built-in support for Cloudflare and reCAPTCHA
 - **Dockerized**: Ready-to-run Docker container
-- **Multiple Scraping Modes**: Single URL, multiple URLs, or search-based scraping
-- **X.com (Twitter) Scraping**: Specialized scraper for X.com/Twitter with profile and tweet content extraction
+- **X.com (Twitter) Scraping**: Specialized scraper for X.com/Twitter for tweet links extraction
 - **FastAPI Interface**: REST API endpoints for web scraping operations
 
 ## Installation
@@ -30,12 +28,6 @@ uv sync
 source .venv/bin/activate  # On Linux/macOS
 # Or on Windows: .venv\Scripts\activate
 ```
-
-### Alternative: Local Installation with pip
-```bash
-pip install -e .
-```
-
 ### Docker Installation
 ```bash
 # Build the Docker image
@@ -46,17 +38,6 @@ docker-compose up --build
 ```
 
 ## Usage
-
-### Command Line Interface
-
-#### General Web Scraping:
-```bash
-# Run the core scraper module
-uv run python -m src.pydoll_scraper.core.scraper
-
-# Or run directly with Python
-uv run python src/pydoll_scraper/core/scraper.py
-```
 
 ### X.com (Twitter) Scraping
 
@@ -112,12 +93,6 @@ curl -X POST "http://localhost:8000/xcom/links" \
      -H "Content-Type: application/json" \
      -d '{"account_name": "elonmusk", "total_tweets": 10}'
 
-# Scrape X.com content
-curl -X POST "http://localhost:8000/xcom/content" \
-     -H "Content-Type: application/json" \
-     -d '{"account_name": "elonmusk", "total_tweets": 5}'
-```
-
 ### Docker Usage
 
 #### Using Docker directly:
@@ -125,18 +100,6 @@ curl -X POST "http://localhost:8000/xcom/content" \
 # Build and run
 docker build -t pydoll-scraper .
 docker run -v $(pwd)/output:/app/output pydoll-scraper
-```
-
-#### Using docker-compose:
-```bash
-# Run the API server
-docker-compose up scraper-api
-
-# Run the CLI scraper
-docker-compose --profile cli up web-scraper
-
-# Run with custom command
-docker-compose run web-scraper uv run python -m src.pydoll_scraper.core.scraper
 ```
 
 ## Configuration
