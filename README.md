@@ -113,25 +113,6 @@ docker run -v $(pwd)/output:/app/output pydoll-scraper
 - `./output:/app/output`: Mount local output directory
 - `./scraper.py:/app/scraper.py`: Mount scraper code for development
 
-## Output Format
-
-The scraper outputs JSON files with the following structure:
-
-```json
-[
-  {
-    "url": "https://example.com",
-    "title": "Example Domain",
-    "content": "This domain is for use in illustrative examples...",
-    "timestamp": "2024-01-15T10:30:00.000000",
-    "metadata": {
-      "description": "Example domain for documentation",
-      "keywords": "example, domain, documentation"
-    }
-  }
-]
-```
-
 ## Development
 
 ### Project Structure
