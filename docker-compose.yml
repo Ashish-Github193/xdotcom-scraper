@@ -1,0 +1,46 @@
+services:
+  web-scraper:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: pydoll-scraper
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./output:/app/output
+    environment:
+      - DISPLAY=:99
+      - CHROME_BIN=/usr/bin/google-chrome
+      - CHROME_PATH=/usr/bin/google-chrome
+    shm_size: 8gb
+    networks:
+      - scraper-network
+    command:
+      - /app/scripts/run_scraper.sh
+
+  novnc:
+    image: 'gotget/novnc:latest'
+    ports:
+      - '6080:6080'
+    command:
+      - '--vnc'
+      - 'web-scraper:5900'
+    networks:
+      - scraper-network
+    restart: unless-stopped
+
+  redis:
+    image: 'redis:7-alpine'
+    container_name: scraper-redis
+    volumes:
+      - 'redis_data:/data'
+    networks:
+      - scraper-network
+    restart: unless-stopped
+
+volumes:
+  redis_data: null
+
+networks:
+  scraper-network:
+    driver: bridge
